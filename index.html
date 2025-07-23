@@ -5,18 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web To-do-List</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <form action="">
+    <form id="todo-form">
         <h1>Todo list</h1>
-        <input type="text" id="task" name="task" placeholder="add a todo...">
-        <input type="date" id="task" name="task" >
-        <button type="submit">+</button>
-        <br> 
-        <button type="submit">FILTER</button>
-        <button type="submit">DELETE ALL</button>
+
+        <div>
+            <input type="text" id="taskInput" name="task" placeholder="Add a todo...">
+            <input class="date" type="date" id="taskDate" name="task" >
+            <button type="submit">+</button>
+        </div>
+
+        <button type="submit" id="filterBtn">FILTER</button>
+        <button type="submit" id="deleteAllBtn">DELETE ALL</button>
         <br>
-        <table class="table" border="1">
+        <table class="table">
             <thead>
                 <tr>
                     <th>TASK</th>
@@ -25,16 +31,8 @@
                     <th>ACTION</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td scope="row"></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </tbody>
         </table>
     </form>
-    <script href="js/script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
