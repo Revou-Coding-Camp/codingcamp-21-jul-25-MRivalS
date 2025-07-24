@@ -1,38 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web To-do-List</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web To-do-List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <form id="todo-form">
-        <h1>Todo list</h1>
 
-        <div>
-            <input type="text" id="taskInput" name="task" placeholder="Add a todo...">
-            <input class="date" type="date" id="taskDate" name="task" >
-            <button type="submit">+</button>
-        </div>
+  <h1>Todo List</h1>
 
-        <button type="submit" id="filterBtn">FILTER</button>
-        <button type="submit" id="deleteAllBtn">DELETE ALL</button>
-        <br>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>TASK</th>
-                    <th>DUE DATE</th>
-                    <th>STATUS</th>
-                    <th>ACTION</th>
-                </tr>
-            </thead>
-        </table>
-    </form>
-    <script src="js/script.js"></script>
+  <form id="todo-form">
+    <input type="text" id="taskInput" placeholder="Masukkan tugas..." required />
+    <input type="date" id="taskDate" required />
+    <button type="submit">Tambah</button>
+    <button type="button" id="deleteAllBtn">Hapus Semua</button>
+  </form>
+
+  <div class="filters">
+    <div>
+      <label for="statusFilter">Filter status:</label>
+      <select id="statusFilter">
+        <option value="all">Semua</option>
+        <option value="pending">Pending</option>
+        <option value="completed">Selesai</option>
+      </select>
+    </div>
+    <div>
+      <label for="dateFilter">Filter tanggal:</label>
+      <input type="date" id="dateFilter" />
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Tugas</th>
+        <th>Tanggal</th>
+        <th>Status</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody id="todoList"></tbody>
+  </table>
+
+  <script src="js/script.js"></script>
 </body>
 </html>

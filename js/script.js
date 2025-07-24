@@ -1,84 +1,94 @@
+// Ambil semua elemen dari DOM
 const form = document.getElementById("todo-form");
 const taskInput = document.getElementById("taskInput");
-const dateInput = document.getElementById("taskDate");
-const filterBtn = document.getElementById("filterBtn");
+const taskDate = document.getElementById("taskDate");
+const statusFilter = document.getElementById("statusFilter");
+const dateFilter = document.getElementById("dateFilter");
+const todoList = document.getElementById("todoList");
 const deleteAllBtn = document.getElementById("deleteAllBtn");
-const table = document.querySelector("table");
 
+// Array penampung tugas
+let todos = [];
 
-let tbody = document.createElement("tbody");
-table.appendChild(tbody);
-
+// Menambahkan tugas baru
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
-
-  const clickedButton = e.submitter;
-  if (clickedButton === filterBtn || clickedButton === deleteAllBtn) return;
-
   const task = taskInput.value.trim();
-  const date = dateInput.value;
+  const date = taskDate.value;
 
-  if (task === "" || date === "") {
-    alert("Silakan isi task dan tanggal terlebih dahulu!");
+  if (task === "" || date === "") return;
+
+  todos.push({ task, date, status: "pending" });
+
+  taskInput.value = "";
+  taskDate.value = "";
+
+  renderTodos();
+});
+
+// Render daftar tugas sesuai filter
+function renderTodos() {
+  todoList.innerHTML = "";
+
+  const statusVal = statusFilter.value;
+  const dateVal = dateFilter.value;
+
+  const filteredTodos = todos.filter((todo) => {
+    const matchStatus = statusVal === "all" || todo.status === statusVal;
+    const matchDate = dateVal === "" || todo.date === dateVal;
+    return matchStatus && matchDate;
+  });
+
+  if (filteredTodos.length === 0) {
+    todoList.innerHTML = `
+      <tr>
+        <td colspan="4" style="text-align:center;">Tidak ada tugas ditemukan.</td>
+      </tr>
+    `;
     return;
   }
 
-  const row = document.createElement("tr");
+  filteredTodos.forEach((todo, index) => {
+    const row = document.createElement("tr");
 
-  row.innerHTML = `
-    <td>${task}</td>
-    <td>${date}</td>
-    <td>Pending</td>
-    <td>
-      <button class="done-btn">Selesai</button>
-      <button class="delete-btn">Hapus</button>
-    </td>
-  `;
+    row.innerHTML = `
+      <td>${todo.task}</td>
+      <td>${todo.date}</td>
+      <td>${todo.status === "pending" ? "pending" : "Selesai"}</td>
+      <td>
+        <button onclick="toggleStatus(${index})">
+          ${todo.status === "pending" ? "Tandai Selesai" : "Tandai Belum"}
+        </button>
+        <button onclick="deleteTodo(${index})">Hapus</button>
+      </td>
+    `;
 
-  tbody.appendChild(row);
-
-  taskInput.value = "";
-  dateInput.value = "";
-});
-
-tbody.addEventListener("click", function (e) {
-  const row = e.target.closest("tr");
-
-  if (e.target.classList.contains("done-btn")) {
-    row.children[2].textContent = "Selesai";
-    e.target.remove();
-  }
-
-  if (e.target.classList.contains("delete-btn")) {
-    const confirmDelete = confirm("Yakin ingin menghapus task ini?");
-    if (confirmDelete) {
-      row.remove();
-    }
-  }
-});
-
-filterBtn.addEventListener("click", function (e) {
-  e.preventDefault();
-  const filter = prompt(
-    "Filter tugas: ketik 'pending' atau 'selesai'"
-  ).toLowerCase();
-
-  const rows = tbody.querySelectorAll("tr");
-  rows.forEach((row) => {
-    const status = row.children[2].textContent.toLowerCase();
-    if (filter === "pending" || filter === "selesai") {
-      row.style.display = status === filter ? "" : "none";
-    } else {
-      row.style.display = "";
-    }
+    todoList.appendChild(row);
   });
-});
+}
 
-deleteAllBtn.addEventListener("click", function (e) {
-  e.preventDefault();
-  const confirmDelete = confirm("Yakin ingin menghapus semua task?");
-  if (confirmDelete) {
-    tbody.innerHTML = "";
+// Ubah status tugas dari pending <-> completed
+function toggleStatus(index) {
+  todos[index].status =
+    todos[index].status === "pending" ? "completed" : "pending";
+  renderTodos();
+}
+
+// Hapus tugas berdasarkan index
+function deleteTodo(index) {
+  todos.splice(index, 1);
+  renderTodos();
+}
+
+// Hapus semua tugas
+deleteAllBtn.addEventListener("click", function () {
+  if (confirm("Apakah kamu yakin ingin menghapus semua tugas?")) {
+    todos = [];
+    renderTodos();
   }
 });
+
+// Filter otomatis saat input berubah
+statusFilter.addEventListener("change", renderTodos);
+dateFilter.addEventListener("change", renderTodos);
