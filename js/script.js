@@ -1,4 +1,3 @@
-// Ambil semua elemen dari DOM
 const form = document.getElementById("todo-form");
 const taskInput = document.getElementById("taskInput");
 const taskDate = document.getElementById("taskDate");
@@ -7,10 +6,8 @@ const dateFilter = document.getElementById("dateFilter");
 const todoList = document.getElementById("todoList");
 const deleteAllBtn = document.getElementById("deleteAllBtn");
 
-// Array penampung tugas
 let todos = [];
 
-// Menambahkan tugas baru
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -27,7 +24,6 @@ form.addEventListener("submit", function (e) {
   renderTodos();
 });
 
-// Render daftar tugas sesuai filter
 function renderTodos() {
   todoList.innerHTML = "";
 
@@ -68,20 +64,17 @@ function renderTodos() {
   });
 }
 
-// Ubah status tugas dari pending <-> completed
 function toggleStatus(index) {
   todos[index].status =
     todos[index].status === "pending" ? "completed" : "pending";
   renderTodos();
 }
 
-// Hapus tugas berdasarkan index
 function deleteTodo(index) {
   todos.splice(index, 1);
   renderTodos();
 }
 
-// Hapus semua tugas
 deleteAllBtn.addEventListener("click", function () {
   if (confirm("Apakah kamu yakin ingin menghapus semua tugas?")) {
     todos = [];
@@ -89,6 +82,5 @@ deleteAllBtn.addEventListener("click", function () {
   }
 });
 
-// Filter otomatis saat input berubah
 statusFilter.addEventListener("change", renderTodos);
 dateFilter.addEventListener("change", renderTodos);

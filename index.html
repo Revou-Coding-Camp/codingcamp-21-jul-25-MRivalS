@@ -10,16 +10,13 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
   <h1>Todo List</h1>
-
   <form id="todo-form">
     <input type="text" id="taskInput" placeholder="Masukkan tugas..." required />
     <input type="date" id="taskDate" required />
     <button type="submit">Tambah</button>
     <button type="button" id="deleteAllBtn">Hapus Semua</button>
   </form>
-
   <div class="filters">
     <div>
       <label for="statusFilter">Filter status:</label>
@@ -34,7 +31,6 @@
       <input type="date" id="dateFilter" />
     </div>
   </div>
-
   <table>
     <thead>
       <tr>
@@ -46,7 +42,6 @@
     </thead>
     <tbody id="todoList"></tbody>
   </table>
-
   <script src="js/script.js"></script>
 </body>
 </html>
